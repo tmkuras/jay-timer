@@ -1,6 +1,6 @@
 Vue.component('state', {
   template: `
-    <div class="box state" :class="{active: enabled}" @click="click_event">
+    <div class="box state" :class="{active: enabled}" @click="$emit('set_active_state', name)">
       <p><b>{{name}}</b></p>
       <p class="clock">{{clock}}</p>
     </div>
@@ -37,9 +37,6 @@ Vue.component('state', {
     },
     increment: function() {
       this.time += 1
-    },
-    click_event: function() {
-      this.$emit('click_event', this.name)
     },
   },
 })
