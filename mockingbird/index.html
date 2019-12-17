@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="index.css">
+	<script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+	<div id="app">
+		<div class="flex-column">
+			<h3>States</h3>
+			<div id="states" class="flex-row">
+				<!-- <p>States</p> -->
+				<state
+					v-for="name in states"
+					:key="name"
+					:name="name"
+					:active_state="active_state"
+					@click_event="set_active_state"
+				></state>
+			</div>
+			<h3>Events</h3>
+			<div id="events" class="flex-row">
+				<!-- <p>Events</p> -->
+			  <event
+			    v-for="name in events"
+			    :key="name"
+			    :name="name"
+			  ></event>
+			</div>
+			<h3>Toggles</h3>
+			<div id="toggles" class="flex-row">
+			  <toggle
+			    v-for="name in toggles"
+			    :key="name"
+			    :name="name"
+			  ></toggle>
+			</div>
+		</div>
+	</div>
+</body>
+<script src="index.js"></script>
+</html>
