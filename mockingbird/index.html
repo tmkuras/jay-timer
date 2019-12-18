@@ -10,7 +10,7 @@
   <div id="app">
     <div class="flex-column">
       <h3>States</h3>
-      <div id="states" class="flex-row">
+      <div id="states" class="flex-row" style="justify-content: space-around;">
         <state
           v-for="(history, name) in states"
           :key="name"
@@ -37,8 +37,8 @@
           :name="name"
           :history="history"
         ></toggle>
-        <button class="box" type="button" @click="download">Download</button>
       </div>
+      <button id="download" type="button" @click="download">Download</button>
     </div>
   </div>
 </body>

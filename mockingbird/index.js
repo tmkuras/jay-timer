@@ -1,8 +1,9 @@
 Vue.component('state', {
   template: `
     <div class="box state" :class="{active: enabled}" @click="$emit('set_active_state', name)">
-      <p><b>{{name}}</b></p>
+      <p class="label">{{name}}</p>
       <p class="clock">{{clock}}</p>
+      <div class="circle"><p>{{history.length}}</p></div>
     </div>
   `,
   props: ['name', 'active_state', 'history'],
@@ -44,8 +45,9 @@ Vue.component('state', {
 Vue.component('event', {
   template: `
     <div class="box event" @click="log">
-      <p><b>{{name}}</b></p>
+      <p class="label">{{name}}</p>
       <p>{{last_time}}</p>
+      <div class="circle"><p>{{history.length}}</p></div>
     </div>
   `,
   props: ['name', 'history'],
@@ -72,8 +74,9 @@ Vue.component('event', {
 Vue.component('toggle', {
   template: `
     <div class="box" :class="{active: enabled}" @click="log">
-      <p><b>{{name}}</b></p>
+      <p class="label">{{name}}</p>
       <p>{{clock}}</p>
+      <div class="circle"><p class="count">{{history.length}}</p></div>
     </div>
   `,
   props: ['name', 'history'],
