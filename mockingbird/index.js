@@ -35,7 +35,7 @@ Vue.component('state', {
         this.timer = setInterval(this.increment, 1000)
       } else {
         timer_diff = (new Date() - this.timer_start) / 1000
-        this.history.push([this.timer_start.toLocaleTimeString(), timer_diff].join(' - '))
+        this.history.push([this.timer_start.toLocaleTimeString(), timer_diff])
         clearInterval(this.timer)
       }
     },
@@ -98,7 +98,7 @@ Vue.component('toggle', {
     toggle: function() {
       if (this.enabled) {
         timer_diff = (new Date() - this.timer_start) / 1000
-        this.history.push([this.timer_start.toLocaleTimeString(), timer_diff].join(' - '))
+        this.history.push([this.timer_start.toLocaleTimeString(), timer_diff])
         clearInterval(this.timer)
         this.timer_start = null
       } else {
@@ -132,6 +132,13 @@ function num_pad(num) {
   }
 }
 
+function get_entries_with_start(obj) {
+  return Object.entries(obj)
+    .map(([k, v]) => _.zip([k + ' Start', k], _.unzip(v)))
+    .flat(1)
+    .map(([k, v]) => [k, v || []])
+}
+
 vm = new Vue({
   el: '#app',
   data: {
@@ -163,10 +170,14 @@ vm = new Vue({
       }
     },
     download: function() {
-      data_items = [this.states, this.events, this.toggles]
-      header = [].concat(data_items.map(Object.keys))
+      columns = Object.fromEntries([
+        get_entries_with_start(this.states),
+        Object.entries(this.events),
+        get_entries_with_start(this.toggles),
+      ].flat(1))
 
-      values = [].concat(...data_items.map(Object.values))
+      header = Object.keys(columns)
+      values = Object.values(columns)
       max_len = Math.max(...values.map(v => v.length))
       rows = [...Array(max_len).keys()].map(i => values.map(row => row[i]))
 
