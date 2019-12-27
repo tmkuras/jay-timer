@@ -11,6 +11,7 @@ Vue.component('state', {
     return {
       time: 0,
       timer: null,
+      timer_start: null,
     }
   },
   watch: {
@@ -27,13 +28,15 @@ Vue.component('state', {
     },
   },
   methods: {
-    toggle: function() {
+    toggle: function () {
       if (this.enabled) {
+        this.timer_start = new Date()
         this.time = 0
         this.timer = setInterval(this.increment, 1000)
       } else {
+        timer_diff = (new Date() - this.timer_start) / 1000
+        this.history.push([this.timer_start.toLocaleTimeString(), timer_diff].join(' - '))
         clearInterval(this.timer)
-        this.history.push(this.clock)
       }
     },
     increment: function() {
@@ -51,10 +54,6 @@ Vue.component('event', {
     </div>
   `,
   props: ['name', 'history'],
-  data: function() {
-    return {
-    }
-  },
   computed: {
     last_time: function() {
       if (this.history.length > 0) {
@@ -73,7 +72,7 @@ Vue.component('event', {
 
 Vue.component('toggle', {
   template: `
-    <div class="box" :class="{active: enabled}" @click="log">
+    <div class="box" :class="{active: enabled}" @click="toggle">
       <p class="label">{{name}}</p>
       <p>{{clock}}</p>
       <div class="circle"><p class="count">{{history.length}}</p></div>
@@ -83,6 +82,7 @@ Vue.component('toggle', {
   data: function() {
     return {
       time: 0,
+      timer: null,
       timer_start: null,
     }
   },
@@ -95,12 +95,12 @@ Vue.component('toggle', {
     },
   },
   methods: {
-    log: function() {
+    toggle: function() {
       if (this.enabled) {
         timer_diff = (new Date() - this.timer_start) / 1000
         this.history.push([this.timer_start.toLocaleTimeString(), timer_diff].join(' - '))
-        this.timer_start = null
         clearInterval(this.timer)
+        this.timer_start = null
       } else {
         this.timer_start = new Date()
         this.time = 0
@@ -164,18 +164,18 @@ vm = new Vue({
     },
     download: function() {
       data_items = [this.states, this.events, this.toggles]
-      header = [].concat(data_items.map(x => Object.keys(x)))
+      header = [].concat(data_items.map(Object.keys))
 
-      values = [].concat(...data_items.map(x => Object.values(x)))
+      values = [].concat(...data_items.map(Object.values))
       max_len = Math.max(...values.map(v => v.length))
-      rows = [...Array(max_len).keys()].map((_, i) => values.map(row => row[i]))
+      rows = [...Array(max_len).keys()].map(i => values.map(row => row[i]))
 
       csv = [header].concat(rows).map(v => v.join(',')).join('\n')
 
-      const blob = new Blob([csv], {type: 'text/csv'})
+      const f = new File([csv], {type: 'text/csv'})
       const link = document.createElement('a')
-      link.href = URL.createObjectURL(blob)
-      link.download = 'squirrel_export'
+      link.href = URL.createObjectURL(f)
+      link.download = 'mockingbird_data.csv'
       link.click()
 
       // console.log(csv)
