@@ -143,18 +143,18 @@ vm = new Vue({
   el: '#app',
   data: {
     states: {
-      Singing: [],
-      PerchNoSing: [],
-      Foraging: [],
-      Preening: [],
-      Flying: [],
+      StartSent: [],
+      TwntyDB: [],
+      FrtyDB: [],
+      SxtyDB: [],
+      EghtyDB: [],
       Unknown: [],
     },
     events: {
-      Head: [],
-      ChangePos: [],
-      Chat: [],
-      Hew: [],
+      Pause: [],
+      Alarm: [],
+      Flush: [],
+      Otherz: [],
     },
     toggles: {
       'Out of sight': [],
@@ -186,7 +186,7 @@ vm = new Vue({
       const f = new File([csv], {type: 'text/csv'})
       const link = document.createElement('a')
       link.href = URL.createObjectURL(f)
-      link.download = 'mockingbird_data.csv'
+      link.download = 'flsj_data.csv'
       link.click()
 
       // console.log(csv)
