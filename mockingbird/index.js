@@ -154,7 +154,7 @@ vm = new Vue({
       Pause: [],
       Alarm: [],
       Flush: [],
-      Otherz: [],
+      Other: [],
     },
     toggles: {
       'Out of sight': [],
