@@ -148,13 +148,12 @@ vm = new Vue({
       FrtyDB: [],
       SxtyDB: [],
       EghtyDB: [],
-      Unknown: [],
     },
     events: {
       Pause: [],
       Alarm: [],
       Flush: [],
-      Other: [],
+      SentReturn: [],
     },
     toggles: {
       'Out of sight': [],
